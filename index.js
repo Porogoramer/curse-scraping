@@ -14,9 +14,18 @@ async function downloadPage() {
   
   // Wait for a specific element that indicates the page has fully loaded
   // Adjust the selector based on the actual page content
-  await page.waitForSelector('.file-row', { timeout: 60000 });
+  await page.waitForSelector( () => {
+    const fileRows = document.querySelectorAll('.file-row');
+    if (fileRows.length == 0) return false;
+    Array(fileRows).every((row) => {
+      const aTag = row.querySelector('a');
+      if (aTag)
+        return aTag.href != null && aTag.href != "";
+      return false;
+    })
+  }, { timeout: 60000 });
 
-  await new Promise(r => setTimeout(r, 1000));
+  // await new Promise(r => setTimeout(r, 1000));
 
   console.log('fetching content')
   const content = await page.content();
