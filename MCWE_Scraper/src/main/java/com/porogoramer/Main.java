@@ -17,7 +17,6 @@ public class Main {
         //Getting the data
         File input = new File("src/main/html/output.html");
         Document doc = Jsoup.parse(input, "UTF-8");
-        //Document doc = Jsoup.connect("https://www.curseforge.com/minecraft/mc-mods/geckolib/files/all?page=1&pageSize=500").get();
 
         //files-table-container contains table with all values
         Element table = doc.getElementsByClass("files-table-container").get(0);
@@ -35,7 +34,6 @@ public class Main {
             System.err.println("Error creating CSV file: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     public static List<WorldEdit> createWEs(Elements rows){
