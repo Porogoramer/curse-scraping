@@ -1,7 +1,10 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+if (process.argv.length != 4) {
+  throw new Error(`URL and filename not provided got ${process.argv}`);
+}
 
-const url = 'https://www.curseforge.com/minecraft/mc-mods/jei/files/all?page=1&pageSize=500';
+const url = process.argv[2];
 
 async function downloadPage() {
   const browser = await puppeteer.launch({headless: false});
@@ -22,7 +25,7 @@ async function downloadPage() {
   const content = await page.content();
 
   console.log('saving output')
-  fs.writeFileSync('output.html', content);
+  fs.writeFileSync(process.argv[3], content);
   
   console.log('Closing browser')
   await browser.close();
