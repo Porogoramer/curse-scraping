@@ -1,5 +1,13 @@
+/**
+ * Downloads the html from a curseforge page after
+ * waiting for the file-row-details elements to load
+ * @param {String} URL to scrape
+ * @param {String} filename name of the file to be saved
+ */
+
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+
 if (process.argv.length != 4) {
   throw new Error(`URL and filename not provided got ${process.argv}`);
 }
@@ -17,7 +25,7 @@ async function downloadPage() {
   
   // Wait for a specific element that indicates the page has fully loaded
   // Adjust the selector based on the actual page content
-  await page.waitForSelector('.file-row-details', { timeout:1000000 });
+  await page.waitForSelector('.file-row-details', { timeout:600000 });
 
   // await new Promise(r => setTimeout(r, 1000));
 
