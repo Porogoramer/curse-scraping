@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 
-const url = 'https://www.curseforge.com/minecraft/mc-mods/geckolib/files/all?page=1&pageSize=500';
+const url = 'https://www.curseforge.com/minecraft/mc-mods/jei/files/all?page=1&pageSize=500';
 
 async function downloadPage() {
   const browser = await puppeteer.launch({headless: false});
@@ -14,7 +14,7 @@ async function downloadPage() {
   
   // Wait for a specific element that indicates the page has fully loaded
   // Adjust the selector based on the actual page content
-  await page.waitForSelector('.file-row-details', { timeout: 60000 });
+  await page.waitForSelector('.file-row-details', { timeout:1000000 });
 
   // await new Promise(r => setTimeout(r, 1000));
 
