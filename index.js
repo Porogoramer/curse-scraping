@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 
-const url = 'https://www.curseforge.com/minecraft/mc-mods/geckolib/files/all?page=1&pageSize=100';
+const url = 'https://www.curseforge.com/minecraft/mc-mods/geckolib/files/all?page=1&pageSize=500';
 
 async function downloadPage() {
   const browser = await puppeteer.launch({headless: false});
@@ -14,11 +14,7 @@ async function downloadPage() {
   
   // Wait for a specific element that indicates the page has fully loaded
   // Adjust the selector based on the actual page content
-  await page.waitForFunction(() => {
-    const fileRows = document.querySelectorAll('.file-row');
-    if (fileRows.length === 0) return false;
-    return Array.from(fileRows).every(row => row.querySelector('a') !== null);
-  }, { timeout: 60000 });
+  await page.waitForSelector('.file-row-details', { timeout: 60000 });
 
   // await new Promise(r => setTimeout(r, 1000));
 
