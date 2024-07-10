@@ -17,7 +17,7 @@ async function downloadPage() {
   await page.waitForSelector( () => {
     const fileRows = document.querySelectorAll('.file-row');
     if (fileRows.length == 0) return false;
-    Array(fileRows).every((row) => {
+    return Array(fileRows).every((row) => {
       const aTag = row.querySelector('a');
       if (aTag)
         return aTag.href != null && aTag.href != "";
