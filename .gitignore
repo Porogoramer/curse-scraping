@@ -2,3 +2,5 @@ node_modules
 MCWE_Scraper/src/main/html/*
 MCWE_Scraper/src/main/output/*
 output.html
+
+MCWE_Scraper/*.html

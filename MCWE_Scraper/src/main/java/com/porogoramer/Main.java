@@ -5,17 +5,25 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
-import java.io.IOException;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import java.io.*;
 import java.lang.annotation.ElementType;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        String url = args[0];
+        String fileName = args[1];
+
+        runScript(url, fileName);
+
         //Getting the data
-        File input = new File("src/main/html/output.html");
+        File input = new File(fileName);
         Document doc = Jsoup.parse(input, "UTF-8");
 
         //files-table-container contains table with all values
@@ -35,6 +43,25 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+    public static void runScript(String url, String filename){
+        //Be able to check with os is used
+        String command = "node";
+        if (System.getProperty("os.name").equals("Linux")) command = "xvfb-run " + command;
+
+        //Current script location is rootproject/index.js
+        String scriptPath = Paths.get("..", "index.js").toString();
+
+        ProcessBuilder processBuilder = new ProcessBuilder(command, scriptPath, url, filename);
+        try{
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+            System.out.println("Script executed with exit code : " + exitCode);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
     public static List<WorldEdit> createWEs(Elements rows){
         List<WorldEdit> list = new ArrayList<>();
